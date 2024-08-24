@@ -45,13 +45,13 @@ export default function ProfileForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-5/6 md:w-2/4 space-y-6 font-mono font-bold">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-4/6 lg:w-2/6 md:w-2/4 space-y-6 font-mono font-bold">
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem>
-                <a href="/auth/google" className="w-full relative inline-block text-center pr-8 py-2 rounded-md border">
+                <a href="https://upgraded-space-happiness-x4xvp9q7v9r2997j-5000.app.github.dev/auth/google" className="w-full relative inline-block text-center pr-8 py-2 rounded-md border">
                   Sign in with Google
                   <span className="absolute right-5 transform after:content-[''] after:inline-block after:w-6 after:h-6 after:bg-[url('/google-logo.png')] after:bg-contain after:bg-no-repeat after:ml-2"></span>
                 </a>
