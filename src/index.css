@@ -122,3 +122,7 @@
   animation: addItem 500ms 1; 
 }
 
+video {
+  width: 49%;
+}
+

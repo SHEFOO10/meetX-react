@@ -15,7 +15,6 @@ export function Home() {
             navigate(`/meet/${meetId}`)
     }
 
-
     useEffect(() => {
         fetch('https://api.shefoo.tech/profile', {
             method: 'GET',
@@ -33,7 +32,7 @@ export function Home() {
                 }
         }).catch((e) => console.log('Error:', error));
     
-    })
+    }, [])
     return (
         <div className="h-screen w-screen flex justify-center items-center transition-all">
             <Card className='w-[400px] h-[220px]'>
