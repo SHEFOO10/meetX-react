@@ -10,6 +10,10 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
+        'max-sm': {'max': '640px'},
+	'max-md': {'max': '768px'},
+	'max-lg': {'max': '1024px'},
+	'max-xl': {'max': '1280px'},
       },
     },
     extend: {

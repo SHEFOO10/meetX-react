@@ -73,7 +73,6 @@
 }
 
 .animatedContainer {
-  min-width: 700px;
   width: 80%;
   max-width: 1000px;
   height: 80%;

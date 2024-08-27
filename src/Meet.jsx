@@ -15,24 +15,27 @@ export function Meet() {
 
     const videoContainerRef = useRef(null);
 
-    const { getLocalStream } = useMediaServer(roomId);
+    const { getLocalStream, socket } = useMediaServer(roomId);
     useEffect(() => {
       const mediaStream = getLocalStream(localVideoRef.current, videoContainerRef.current);
       //localVideoRef.current.srcObject = mediaStream
       mediaStream.then(stream => localVideoRef.current.srcObject = stream)
       console.log(mediaStream);
+      return () => {
+	      socket.close()
+      }
     }, [])
 
 
 
-    function handleMute() {
-      localVideoRef.current.srcObj.getAudioTracks().forEach(audioTrack => audioTrack.enabled = !audioMuted);
+    function handleMute(e) {
+      localVideoRef.current.srcObject.getAudioTracks().forEach(audioTrack => audioTrack.enabled = !audioMuted);
       setAudioMuted(!audioMuted)
       if (audioMuted) {
         e.target.innerText = 'Unmute';
       } else {
         e.target.innerText = 'Mute';
-      }                                                               │ubuntu@285366-lb-01:~$
+      }
     }
     function handleEndCall(e) {
       navigate('/');
@@ -61,7 +64,7 @@ export function Meet() {
         <>
             <SideChat opened={opened}/>
             <div className="w-screen h-screen flex justify-center items-center">
-                <div ref={videoContainerRef} className="animatedContainer">
+                <div ref={videoContainerRef} className="animatedContainer max-sm:grid-cols-1">
                   <video ref={localVideoRef} autoPlay playsInline  className="bg-black w-full h-full rounded-md object-cover"></video>
                 </div>
             </div>

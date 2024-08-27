@@ -184,6 +184,7 @@ const useMediaServer = (roomId) => {
       } else if (params.kind === 'video') {
         const videoElement = document.createElement('video');
         videoElement.id = `td-${remoteProducerId}`;
+	videoElement.classList.add('w-full', 'h-full');
         videoElement.srcObject = new MediaStream([consumer.track]);
         videoElement.autoplay = true;
         videoContainer.appendChild(videoElement)
@@ -221,7 +222,7 @@ const useMediaServer = (roomId) => {
     };
   }, [consumerTransports]);
 
-  return { getLocalStream };
+  return { getLocalStream, socket };
 };
 
 export default useMediaServer;
