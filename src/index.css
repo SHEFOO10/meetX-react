@@ -3,19 +3,6 @@
 @tailwind utilities;
 
 
-::-webkit-scrollbar {
-  /* Customize the scrollbar width */
-  width: 10px;
-  border-radius: 20px;
-  background-color: rgb(133, 134, 136);
-}
-
-
-::-webkit-scrollbar-thumb {
-  /* Customize the scrollbar thumb */
-  border-radius: 20px;
-  background-color: #fff;
-}
 
 
 @layer base {
@@ -84,3 +71,54 @@
     @apply bg-background text-foreground;
   }
 }
+
+.animatedContainer {
+  min-width: 700px;
+  width: 80%;
+  max-width: 1000px;
+  height: 80%;
+  padding-inline: 20px;
+  padding-block: 20px;
+  border-radius: 25px;
+  border: 2px dashed black;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 49%);
+  grid-template-rows: repeat(auto-fill, 49%);
+  gap: 10px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.animatedContainer::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+}
+.animatedContainer::-webkit-scrollbar-track {
+  background: transparent;
+  background-color: rgb(238, 222, 222);
+  border-radius: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+  
+.animatedContainer::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: rgb(0, 0, 0);
+  border-right: none;
+  border-left: none;
+}
+
+
+@keyframes addItem {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.new {
+  animation: addItem 500ms 1; 
+}
+

@@ -18,12 +18,8 @@ export function Home() {
 
     useEffect(() => {
         fetch('https://api.shefoo.tech/profile', {
-            method: 'POST',
+            method: 'GET',
             credentials: 'include', // Ensure cookies, including HttpOnly cookies, are sent
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(credentials),
         }).then(response => {
             if (response.ok) {
                 const data = response.json();

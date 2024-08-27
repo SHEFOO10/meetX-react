@@ -64,9 +64,8 @@ export function Meet() {
         <>
             <SideChat opened={opened}/>
             <div className="w-screen h-screen flex justify-center items-center">
-                <div id="videosContainer" className="w-3/4 h-[600px] p-2 lg:flex lg:justify-center md:grid md:grid-cols-2 grid grid-cols-1 grid-rows-2  gap-3 place-items-center">
-                <video ref={localVideoRef} autoPlay playsInline  className="bg-black w-full max-w-[400px] h-[260px] rounded-md object-cover"></video>
-                <div ref={videoContainerRef} id="videoContainer"></div>
+                <div ref={videoContainerRef} className="animatedContainer">
+                  <video ref={localVideoRef} autoPlay playsInline  className="bg-black w-full h-full rounded-md object-cover"></video>
                 </div>
             </div>
             <footer
