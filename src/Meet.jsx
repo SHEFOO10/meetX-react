@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 import { useState, useEffect, useRef } from "react";
@@ -9,7 +9,7 @@ import useMediaServer from "./useMediaServer";
 
 export function Meet() {
     const { roomId } = useParams()
-    // const [device, setDevice] = useState(null);
+    const navigate = useNavigate()
     const localVideoRef = useRef(null);
     const [audioMuted, setAudioMuted] = useState(false);
 
@@ -26,21 +26,18 @@ export function Meet() {
 
 
     function handleMute() {
-
+      localVideoRef.current.srcObj.getAudioTracks().forEach(audioTrack => audioTrack.enabled = !audioMuted);
+      setAudioMuted(!audioMuted)
+      if (audioMuted) {
+        e.target.innerText = 'Unmute';
+      } else {
+        e.target.innerText = 'Mute';
+      }                                                               │ubuntu@285366-lb-01:~$
     }
     function handleEndCall(e) {
-        localVideoRef.current.srcObj.getAudioTracks().forEach(audioTrack => audioTrack.enabled = !audioMuted);
-        setAudioMuted(!audioMuted)
-        if (audioMuted) {
-          e.target.innerText = 'Unmute';
-        } else {
-          e.target.innerText = 'Mute';
-        }
-      }
-
-    function handleShareScreen() {
-
+      navigate('/');
     }
+
 
     const [opened, setOpened] = useState(false); 
     const chatRef = useRef(null);
@@ -77,7 +74,6 @@ export function Meet() {
                 <Button ref={chatRef} className='mx-1 z-20' onClick={handleToggleChat}>Open Chat</Button>
                 <Button className='mx-1' onClick={handleMute}>Mute</Button>
                 <Button className='mx-1' onClick={handleEndCall}>End Call</Button>
-                <Button className='mx-1' onClick={handleShareScreen}>Share Screen</Button>
             </footer>
         </>
     );
