@@ -9,6 +9,7 @@ const useMediaServer = (roomId) => {
   let producerTransport;
   let consumerTransports = [];
   let consumingTransports = [];
+  let videoContainer;
 
   const audioParams = useRef({});
   const videoParams = useRef({
@@ -22,12 +23,7 @@ const useMediaServer = (roomId) => {
     }
   });
 
-  useEffect(() => {
-      getLocalStream();
-  }, []);
-
-  const streamSuccess = (stream) => {
-    const localVideo = document.getElementById('localVideo');
+  const streamSuccess = (stream, localVideo) => {
     if (localVideo) {
       localVideo.srcObject = stream;
     }
@@ -38,7 +34,7 @@ const useMediaServer = (roomId) => {
     joinRoom(roomId);
   };
 
-  const getLocalStream = async () => {
+  const getLocalStream = async (localVideo, videoContainerElement) => {
     try {
       const localStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -53,7 +49,8 @@ const useMediaServer = (roomId) => {
         audio: true,
         video: true
       });
-      streamSuccess(localStream);
+      videoContainer = videoContainerElement;
+      streamSuccess(localStream, localVideo);
     }
   };
 
@@ -177,15 +174,18 @@ const useMediaServer = (roomId) => {
 
       consumerTransports.push({ consumerTransport, serverConsumerTransportId: params.id, producerId: remoteProducerId, consumer });
 
-      const newElem = document.createElement('div');
-      newElem.setAttribute('id', `td-${remoteProducerId}`);
-      newElem.innerHTML = params.kind === 'audio'
-        ? `<audio id="${remoteProducerId}" autoplay></audio>`
-        : `<video id="${remoteProducerId}" autoplay class="video"></video>`;
 
-      document.getElementById('videoContainer').appendChild(newElem);
-      document.getElementById(remoteProducerId).srcObject = new MediaStream([consumer.track]);
-
+      if (params.kind === 'audio') {
+        const audioElement = document.createElement('audio');
+        audioElement.id = `td-${remoteProducerId}`;
+        audioElement.srcObject = new MediaStream([consumer.track]);
+        videoContainer.appendChild(audioElement)
+      } else if (params.kind === 'video') {
+        const videoElement = document.createElement('video');
+        videoElement.id = `td-${remoteProducerId}`;
+        videoElement.srcObject = new MediaStream([consumer.track]);
+        videoContainer.appendChild(videoElement)
+      }
       socket.emit('consumer-resume', { serverConsumerId: params.serverConsumerId });
     });
   };

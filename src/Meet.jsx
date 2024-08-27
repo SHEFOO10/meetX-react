@@ -11,8 +11,11 @@ export function Meet() {
     const { roomId } = useParams()
     // const [device, setDevice] = useState(null);
     const localVideoRef = useRef(null);
-    const { local} = useMediaServer(roomId);
+    const videoContainerRef = useRef(null);
+
+    const { getLocalStream } = useMediaServer(roomId);
     useEffect(() => {
+      const mediaStream = getLocalStream(localVideoRef.current);
       localVideoRef.current.srcObj = mediaStream
     }, [])
 
@@ -52,8 +55,8 @@ export function Meet() {
             <SideChat opened={opened}/>
             <div className="w-screen h-screen flex justify-center items-center">
                 <div id="videosContainer" className="w-3/4 h-[600px] p-2 lg:flex lg:justify-center md:grid md:grid-cols-2 grid grid-cols-1 grid-rows-2  gap-3 place-items-center">
-                <video key={1} ref={localVideoRef} autoPlay playsInline  className="bg-black w-full max-w-[400px] h-[260px] rounded-md object-cover"></video>
-                <video key={2} id="remoteVideo" className="w-full h-[260px] bg-black rounded-md object-cover max-w-[400px]"></video>
+                <video ref={localVideoRef} autoPlay playsInline  className="bg-black w-full max-w-[400px] h-[260px] rounded-md object-cover"></video>
+                <div ref={videoContainerRef} id="videoContainer"></div>
                 </div>
             </div>
             <footer
