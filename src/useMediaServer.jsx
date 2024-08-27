@@ -179,11 +179,13 @@ const useMediaServer = (roomId) => {
         const audioElement = document.createElement('audio');
         audioElement.id = `td-${remoteProducerId}`;
         audioElement.srcObject = new MediaStream([consumer.track]);
+        audioElement.autoplay = true;
         videoContainer.appendChild(audioElement)
       } else if (params.kind === 'video') {
         const videoElement = document.createElement('video');
         videoElement.id = `td-${remoteProducerId}`;
         videoElement.srcObject = new MediaStream([consumer.track]);
+        videoElement.autoplay = true;
         videoContainer.appendChild(videoElement)
       }
       socket.emit('consumer-resume', { serverConsumerId: params.serverConsumerId });

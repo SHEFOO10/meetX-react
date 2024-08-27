@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 
 
@@ -14,6 +14,30 @@ export function Home() {
         if (meetId !== '')
             navigate(`/meet/${meetId}`)
     }
+
+
+    useEffect(() => {
+        fetch('https://api.shefoo.tech/profile', {
+            method: 'POST',
+            credentials: 'include', // Ensure cookies, including HttpOnly cookies, are sent
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials),
+        }).then(response => {
+            if (response.ok) {
+                const data = response.json();
+                // Handle success (e.g., save token, redirect user)
+                console.log('Login successful:', data);
+                console.log(response)
+                navigate('/')
+                } else {
+                // Handle errors (e.g., invalid credentials)
+                console.error('Login failed:', response.statusText);
+                }
+        }).catch((e) => console.log('Error:', error));
+    
+    })
     return (
         <div className="h-screen w-screen flex justify-center items-center transition-all">
             <Card className='w-[400px] h-[220px]'>

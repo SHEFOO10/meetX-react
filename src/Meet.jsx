@@ -11,6 +11,8 @@ export function Meet() {
     const { roomId } = useParams()
     // const [device, setDevice] = useState(null);
     const localVideoRef = useRef(null);
+    const [audioMuted, setAudioMuted] = useState(false);
+
     const videoContainerRef = useRef(null);
 
     const { getLocalStream } = useMediaServer(roomId);
@@ -24,9 +26,15 @@ export function Meet() {
     function handleMute() {
 
     }
-    function handleEndCall() {
-        
-    }
+    function handleEndCall(e) {
+        localVideoRef.current.srcObj.getAudioTracks().forEach(audioTrack => audioTrack.enabled = !audioMuted);
+        setAudioMuted(!audioMuted)
+        if (audioMuted) {
+          e.target.innerText = 'Unmute';
+        } else {
+          e.target.innerText = 'Mute';
+        }
+      }
 
     function handleShareScreen() {
 
