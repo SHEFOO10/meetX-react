@@ -12,11 +12,53 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useRef } from "react"
+import { useNavigate } from "react-router-dom"
+
 
 export function DemoCreateAccount() {
+  const emailElement = useRef(null);
+  const passwordElement = useRef(null);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const email = emailElement.current.value;
+    const password = passwordElement.current.value;
+    const credentials = { email, password };
+
+    try {
+        const response = await fetch('https://api.shefoo.tech/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            // Handle success (e.g., save token, redirect user)
+            console.log('Login successful:', data);
+            console.log(response)
+          } else {
+            // Handle errors (e.g., invalid credentials)
+            console.error('Login failed:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+
+  function handleClickNavi() {
+    navigate('/anywhere');
+  }
+
   const handleGoogleLogin = () => {
     const authWindow = window.open(
-      'https://upgraded-space-happiness-x4xvp9q7v9r2997j-5000.app.github.dev/auth/google',
+      'https://api.shefoo.tech/auth/google',
       '_self',
     );
   }
@@ -28,6 +70,7 @@ export function DemoCreateAccount() {
           Enter your email below to create your account
         </CardDescription>
       </CardHeader>
+      <form onSubmit={handleSubmit}>
       <CardContent className="grid gap-4">
         <div className="grid grid-cols-2 gap-6">
           <Button variant="outline">
@@ -49,18 +92,20 @@ export function DemoCreateAccount() {
             </span>
           </div>
         </div>
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" />
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full">Create account</Button>
-      </CardFooter>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input ref={emailElement} id="email" type="email" placeholder="m@example.com" />
+            </div>
+            <div className="grid gap-2 mt-4">
+              <Label htmlFor="password">Password</Label>
+              <Input ref={passwordElement} id="password" type="password" />
+            </div>
+        </CardContent>
+        <CardFooter>
+          <Button className="w-full" type='submit'>Create account</Button>
+        </CardFooter>
+      </form>
+      <button onClick={handleClickNavi}> navigate </button>
     </Card>
   )
 }

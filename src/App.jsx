@@ -1,26 +1,24 @@
 // import { Dashboard } from './Dashboard';
-import { DemoCreateAccount } from './components/create-account';
 
 import { Routes, Route } from 'react-router-dom';
-import { Dashboard } from './Dashboard';
-import ProfileForm from './ProfileForm';
+
+import { NotFound } from './NotFound';
+import { Login } from './Login';
+import { Signup } from './Signup';
+import { Home } from './Home';
+import { Meet } from './Meet';
 
 
-const Home = () => {
-  return (
-    <div className="h-screen w-screen flex justify-center items-center transition-all">
-      <ProfileForm />
-    </div>
-  )
-}
 
 function App() {
 
   return (
     <Routes>
-    <Route path="/" element={<Home />}>
-    <Route path="*" element={<Home />} />
-    </Route>
+    <Route path='/' element={<Home />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/signup" element={<Signup />} />
+    <Route path='/meet/:roomId' element={<Meet />} />
+    <Route path="*" element={<NotFound />} />
   </Routes>
   )
 }
