@@ -18,7 +18,9 @@ export function Meet() {
     const { getLocalStream } = useMediaServer(roomId);
     useEffect(() => {
       const mediaStream = getLocalStream(localVideoRef.current, videoContainerRef.current);
-      localVideoRef.current.srcObj = mediaStream
+      //localVideoRef.current.srcObject = mediaStream
+      mediaStream.then(stream => localVideoRef.current.srcObject = stream)
+      console.log(mediaStream);
     }, [])
 
 

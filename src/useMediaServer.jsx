@@ -35,23 +35,23 @@ const useMediaServer = (roomId) => {
   };
 
   const getLocalStream = async (localVideo, videoContainerElement) => {
-    try {
-      const localStream = await navigator.mediaDevices.getUserMedia({
+   let localStream;
+   try {
+      localStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: {
-          width: { min: 640, max: 1920 },
-          height: { min: 400, max: 1080 },
-        }
+        video: true
       });
+      videoContainer = videoContainerElement;
       streamSuccess(localStream);
     } catch (e) {
-      const localStream = await navigator.mediaDevices.getDisplayMedia({
+      localStream = await navigator.mediaDevices.getDisplayMedia({
         audio: true,
         video: true
       });
       videoContainer = videoContainerElement;
       streamSuccess(localStream, localVideo);
     }
+    return localStream;
   };
 
   const joinRoom = (roomName) => {
