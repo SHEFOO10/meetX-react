@@ -123,5 +123,7 @@
 
 video {
   width: 49%;
+  border-radius: 20px;
+  border: 0.5px solid black;
 }
 
