@@ -22,6 +22,17 @@ export function Login() {
   
     const navigate = useNavigate();
   
+    useEffect(() => {
+      const dataPromise = checkLoggedIn()
+      dataPromise.then(data => {
+        if (!data.user) {
+            navigate('/login')
+        } else if (data.user) {
+            console.log(data.user);
+        };
+    })
+    }, []);
+
     const handleSubmit = async (event) => {
       event.preventDefault();
   
@@ -29,16 +40,7 @@ export function Login() {
       const password = passwordElement.current.value;
       const credentials = { username, password };
   
-      useEffect(() => {
 
-            const dataPromise = checkLoggedIn()
-            dataPromise.then(data => {
-              if (!data.user) {
-                  navigate('/login')
-              } else if (data.user) {
-                  console.log(data.user);
-              };
-            })
             fetch('https://api.shefoo.tech/login', {
                 method: 'POST',
                 headers: {
@@ -51,7 +53,7 @@ export function Login() {
                   navigate('/')
               }).catch(e => console.log(e));
             })
-        }, []);
+
         };
   
   
