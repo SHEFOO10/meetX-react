@@ -26,11 +26,7 @@ export function Login() {
     useEffect(() => {
       const dataPromise = checkLoggedIn()
       dataPromise.then(data => {
-        if (!data.user) {
-            navigate('/login')
-        } else if (data.user) {
-            console.log(data.user);
-        };
+        if (data.user) navigate('/')
     })
     }, []);
 
