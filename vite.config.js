@@ -10,11 +10,11 @@ export default defineConfig({
       "@": path.resolve(__dirname),
     },
   },
-  server: {
-    port: 443,
-    https: {
-      key: fs.readFileSync('/etc/letsencrypt/live/shefoo.tech-0001/privkey.pem'),
-      cert: fs.readFileSync('/etc/letsencrypt/live/shefoo.tech-0001/fullchain.pem')
-    }
-  }
+  // server: {
+  //   port: 443,
+  //   https: {
+  //     key: fs.readFileSync('/etc/letsencrypt/live/shefoo.tech-0001/privkey.pem'),
+  //     cert: fs.readFileSync('/etc/letsencrypt/live/shefoo.tech-0001/fullchain.pem')
+  //   }
+  // }
 })

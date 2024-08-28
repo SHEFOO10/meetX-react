@@ -16,6 +16,10 @@ export function Home() {
             navigate(`/meet/${meetId}`)
     }
 
+    function handleLogout () {
+        navigate('/logout');
+    }
+
 
     useEffect(() => {
        const dataPromise = checkLoggedIn()
@@ -28,6 +32,8 @@ export function Home() {
        })
     }, [])
     return (
+        <>
+        <nav className="fixed w-full h-[80px] top-0 bg-black flex justify-end items-center"><Button className="mr-12" onClick={handleLogout}>Logout</Button></nav>
         <div className="h-screen w-screen flex justify-center items-center transition-all">
             <Card className='w-[400px] h-[220px]'>
                 <CardHeader>
@@ -41,5 +47,6 @@ export function Home() {
                 </CardContent>
             </Card>
         </div>
+        </>
     )
 }
