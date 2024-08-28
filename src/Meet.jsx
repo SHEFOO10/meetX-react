@@ -37,7 +37,8 @@ export function Meet() {
         e.target.innerText = 'Mute';
       }
     }
-    function handleEndCall(e) {
+    function handleEndCall() {
+      localVideoRef.current.remove();
       navigate('/');
     }
 
