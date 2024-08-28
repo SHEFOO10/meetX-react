@@ -31,7 +31,15 @@ export function Login() {
   
       useEffect(() => {
 
-            const response = fetch('https://api.shefoo.tech/login', {
+            const dataPromise = checkLoggedIn()
+            dataPromise.then(data => {
+              if (!data.user) {
+                  navigate('/login')
+              } else if (data.user) {
+                  console.log(data.user);
+              };
+            })
+            fetch('https://api.shefoo.tech/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

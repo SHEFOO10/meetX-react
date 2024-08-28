@@ -50,11 +50,11 @@ export function Signup() {
           if (response.ok) {
               const data = await response.json();
               // Handle success (e.g., save token, redirect user)
-              console.log('Login successful:', data);
+              console.log('signup successful:', data);
               console.log(response)
             } else {
               // Handle errors (e.g., invalid credentials)
-              console.error('Login failed:', response.statusText);
+              console.error('signup failed:', response.statusText);
             }
           } catch (error) {
             console.error('Error:', error);
