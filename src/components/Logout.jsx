@@ -1,7 +1,8 @@
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { checkLoggedIn } from "./auth";
 
 export function Logout () {
+    const navigate = useNavigate();
     const dataPromise = checkLoggedIn()
     dataPromise.then(data => {
         if (data.user) {
@@ -13,7 +14,7 @@ export function Logout () {
             }).catch((err) => {
                 console.log(err);
             })
-            return (<Navigate to='/login' />);
+            navigate('/login');
         }
     })
 }
