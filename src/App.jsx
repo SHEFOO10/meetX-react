@@ -15,18 +15,14 @@ import { Logout } from './components/Logout';
 function App() {
 
   return (
-    <AuthProvider>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path='/logout' element={<Logout />} />
-        <RequireAuth>
-          <Route path='/meet/:roomId' element={<Meet />} />
-        </RequireAuth>
+        <Route path='/meet/:roomId' element={<RequireAuth><Meet /></RequireAuth>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </AuthProvider>
   )
 }
 

@@ -1,25 +1,23 @@
-const { useState, createContext, useContext } = require("react");
 
-const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+export const checkLoggedIn = async () => {
+    try {
+        const response = await fetch('https://api.shefoo.tech/profile', {
+            method: 'GET',
+            credentials: 'include', // Ensure cookies, including HttpOnly cookies, are sent
+        });
 
-    const login = (user) => {
-        setUser(user)
-    } 
-    const logout = () => {
-        setUser(null);
+        if (response.ok) {
+            const data = await response.json();
+            // Handle success (e.g., save token, redirect user)
+            return { user: data };
+        } else {
+            // Handle errors (e.g., invalid credentials)
+            console.error('Login failed:', response.statusText);
+            return {}; // Return an empty object or appropriate error handling
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return {}; // Return an empty object or appropriate error handling
     }
-
-    return (
-    <AuthContext.Provider value={{ user, login, logout}}>
-        { children }
-    </AuthContext.Provider>
-    );
-}
-
-export const useAuth = () => {
-    return useContext(AuthContext);
-}
-
+};

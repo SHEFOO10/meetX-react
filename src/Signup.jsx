@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
+import { checkLoggedIn } from "./components/auth"
 
   
 export function Signup() {
@@ -22,6 +23,14 @@ export function Signup() {
   
     const navigate = useNavigate();
   
+    useEffect(() => {
+      const dataPromise = checkLoggedIn()
+      dataPromise.then(data => {
+        if (data.user)
+          navigate('/')
+      })
+    }, []);
+
     const handleSubmit = async (event) => {
       event.preventDefault();
   

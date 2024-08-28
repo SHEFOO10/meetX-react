@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
+import { checkLoggedIn } from "./components/auth"
 
 
 export function Home() {
@@ -15,23 +16,17 @@ export function Home() {
             navigate(`/meet/${meetId}`)
     }
 
+
     useEffect(() => {
-        fetch('https://api.shefoo.tech/profile', {
-            method: 'GET',
-            credentials: 'include', // Ensure cookies, including HttpOnly cookies, are sent
-        }).then(response => {
-            if (response.ok) {
-                const data = response.json();
-                // Handle success (e.g., save token, redirect user)
-                console.log('Login successful:', data);
-                console.log(response)
-                navigate('/')
-                } else {
-                // Handle errors (e.g., invalid credentials)
-                console.error('Login failed:', response.statusText);
-                }
-        }).catch((e) => console.log('Error:', error));
-    
+       const dataPromise = checkLoggedIn()
+       dataPromise.then(data => {
+        if (!data.user) {
+            navigate('/login')
+        } else if (data.user) {
+            console.log(data.user);
+            auth.login(data.user);
+        };
+       })
     }, [])
     return (
         <div className="h-screen w-screen flex justify-center items-center transition-all">

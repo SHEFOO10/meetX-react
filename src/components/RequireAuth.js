@@ -1,11 +1,12 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./auth"
+import { checkLoggedIn, useAuth } from "./auth"
 
 export const RequireAuth = ({ children }) => {
-    const auth = useAuth();
-    if (!auth.user) {
-        return <Navigate to='/login' />
-    }
+    const dataPromise = checkLoggedIn();
+    dataPromise.then(data => {
+        if (!data.user)
+            return <Navigate to='/login' />
+    })
 
     return children;
 }

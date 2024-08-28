@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 
   
@@ -29,28 +29,21 @@ export function Login() {
       const password = passwordElement.current.value;
       const credentials = { username, password };
   
-      try {
-          const response = await fetch('https://api.shefoo.tech/login', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(credentials),
-          });
-  
-          if (response.ok) {
-              const data = await response.json();
-              // Handle success (e.g., save token, redirect user)
-              console.log('Login successful:', data);
-              console.log(response)
-              navigate('/')
-            } else {
-              // Handle errors (e.g., invalid credentials)
-              console.error('Login failed:', response.statusText);
-            }
-          } catch (error) {
-            console.error('Error:', error);
-          }
+      useEffect(() => {
+
+            const response = fetch('https://api.shefoo.tech/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentials),
+            }).then(response => {
+              response.json().then(data => {
+                if (data.ok)
+                  navigate('/')
+              }).catch(e => console.log(e));
+            })
+        }, []);
         };
   
   
@@ -70,7 +63,6 @@ export function Login() {
             You can login with Google !
           </CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
         <CardContent className="grid gap-4">
           <div className="grid grid-cols-1 gap-6">
             <Button variant="outline" onClick={handleGoogleLogin}>
@@ -98,9 +90,8 @@ export function Login() {
               </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" type='submit'>Login</Button>
+            <Button className="w-full" onClick={handleSubmit}>Login</Button>
           </CardFooter>
-        </form>
       </Card>
       </div>
     )
