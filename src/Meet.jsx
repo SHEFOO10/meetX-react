@@ -38,9 +38,22 @@ export function Meet() {
       }
     }
     function handleEndCall() {
-      localVideoRef.current.remove();
+      if (localVideoRef.current && localVideoRef.current.srcObject) {
+          // Get all tracks from the media stream
+          const tracks = localVideoRef.current.srcObject.getTracks();
+  
+          // Stop each track to release the camera and microphone
+          tracks.forEach(track => track.stop());
+  
+          // Clear the video source and remove the video element
+          localVideoRef.current.srcObject = null;
+          localVideoRef.current.remove();
+      }
+  
+      // Navigate to the home page or another route
       navigate('/');
-    }
+  }
+  
 
 
     const [opened, setOpened] = useState(false); 
