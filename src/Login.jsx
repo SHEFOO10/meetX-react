@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
+import { checkLoggedIn } from "./components/auth"
 
   
 export function Login() {
