@@ -7,9 +7,8 @@ import { Login } from './Login';
 import { Signup } from './Signup';
 import { Home } from './Home';
 import { Meet } from './Meet';
-import { AuthProvider } from './components/auth';
-import { RequireAuth } from './components/RequireAuth';
-import { Logout } from './components/Logout';
+import { RequireAuth } from './components/RequireAuth.jsx';
+import { Logout } from './components/Logout.jsx';
 
 
 function App() {

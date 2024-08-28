@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { checkLoggedIn, useAuth } from "./auth"
+import { checkLoggedIn } from "./auth.js"
 
 export const RequireAuth = ({ children }) => {
     const dataPromise = checkLoggedIn();

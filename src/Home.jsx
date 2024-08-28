@@ -24,7 +24,6 @@ export function Home() {
             navigate('/login')
         } else if (data.user) {
             console.log(data.user);
-            auth.login(data.user);
         };
        })
     }, [])
